@@ -7,6 +7,10 @@ The package manager
 
 ***Pre αlphα***
 
+## Languages
+[English](README.md)  
+[Русский](docs/READMEru.md)
+
 ## Key features
 - Installation in different scopes: user, group, global
 - Clean package removal
