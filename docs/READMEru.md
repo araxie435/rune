@@ -1,5 +1,6 @@
 <div align="center" >
-    <img height=150 width=550 src="pictures/logo.svg">
+    <img height=150 width=550 src="docs/pictures/logo.svg#gh-dark-mode-only">
+    <img height=150 width=550 src="docs/pictures/logo.svg#gh-light-mode-only">
 </div>
 <br>
 
