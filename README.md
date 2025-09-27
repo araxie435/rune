@@ -22,14 +22,14 @@ The package manager
 
 Roadmap:
 - [x] Help command
-- [0] Example package
-- [-] Global installation (offline)
-- [-] Group & User installation (offline)
-- [-] Uninstallation
-- [-] Package update feature
-- [-] Mirrors
-- [-] Online
-- [-] Release 0.1.0
+- [ ] Example package
+- [ ] Global installation (offline)
+- [ ] Group & User installation (offline)
+- [ ] Uninstallation
+- [ ] Package update feature
+- [ ] Mirrors
+- [ ] Online
+- [ ] Release 0.1.0
 
 Plans:
 - Better configuration
