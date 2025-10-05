@@ -9,6 +9,6 @@ pub fn help(parameter: &str) {
         "tree" => println!("Tree usage:\nrune tree [scope]\tShow tree of packages\nArguments:\n--user <user>\tShow tree of user packages\n--group <group>\tShow tree of group packages"),
         "info" => println!("Info usage:\nrune info [scope] <package>\tShow information about package\nArguments:\n--user <user>\tShow information of user package\n--group <group>\tShow information of group package"),
         "help" => println!("Help usage:\nrune help [argument]\tShow help about command\nArguments:\n--everything\tShow full help"),
-        _ => small_help()
+        _ => help("--everything")
     }
 }

@@ -9,21 +9,30 @@ The package manager
 ***Pre αlphα***
 
 ## Languages
+
 [English](README.md)  
 [Русский](docs/READMEru.md)
 
 ## Key features
+
 - Installation in different scopes: user, group, global
 - Clean package removal
 
 ## Installation
+
 ***In future***
+
+## Docs
+
+Now only in english
+
+[Documentation](docs/documentation.md)
 
 ## Future
 
 Roadmap:
 - [x] Help command
-- [ ] Example package
+- [x] Example package
 - [ ] Global installation (offline)
 - [ ] Group & User installation (offline)
 - [ ] Uninstallation

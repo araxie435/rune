@@ -6,7 +6,7 @@ pub fn handle(config: Config) {
     let input: Vec<String> = std::env::args().collect();
 
     if input.len() < 2 {
-        help::small_help();
+        help::help("--everything");
         exit(0);
     }
 
