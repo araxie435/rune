@@ -33,7 +33,7 @@ Now only in english
 Roadmap:
 - [x] Help command
 - [x] Example package
-- [ ] Global installation (offline)
+- [x] Global installation (offline)
 - [ ] Group & User installation (offline)
 - [ ] Uninstallation
 - [ ] Package update feature

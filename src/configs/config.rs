@@ -1,11 +1,20 @@
+use std::path::PathBuf;
+
 pub struct Config {
-    user: String,
-    scope: String
+    pub user: String,
+    pub scope: String
+}
+
+#[derive(serde::Deserialize)]
+pub struct Manifest {
+    pub name: String,
+    pub version: String,
+    pub description: String,
+    pub levels: String
 }
 
 pub fn collect_config() -> Config {
-    let user = std::env::var("USER").unwrap();
-
+    let user: String = std::env::var("USER").unwrap();
     
     let mut scope: String = "".to_string();
 
@@ -16,4 +25,10 @@ pub fn collect_config() -> Config {
     }
 
     return Config { user: user, scope: scope }
+}
+
+pub fn parse_manifest(path_to_manifest: &PathBuf) -> Manifest {
+    let manifest_content: String = std::fs::read_to_string(path_to_manifest).expect("Failed to read manifest file");
+    let manifest: Manifest = serde_yaml::from_str(&manifest_content).expect("Failed to parse manifest file");
+    return manifest;
 }

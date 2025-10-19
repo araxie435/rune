@@ -1,12 +1,13 @@
 use std::process::exit;
 use crate::configs::config::Config;
-use crate::commands::help;
+use crate::commands::help::help;
+use crate::actions::install::install::install_handler;
 
 pub fn handle(config: Config) {
     let input: Vec<String> = std::env::args().collect();
 
     if input.len() < 2 {
-        help::help("--everything");
+        help("--everything");
         exit(0);
     }
 
@@ -14,13 +15,19 @@ pub fn handle(config: Config) {
     match input[1].as_str() {
         "help" | "--help" => {
             if input.len() >= 3 {
-                help::help(input[2].as_str());
+                help(input[2].as_str());
                 exit(0);
             }
-            help::help("--everything");
+            help("--everything");
             exit(0);
         }
-        "install" => {}
+        "install" => {
+            if input.len() >= 3 {
+                install_handler(&input[2..]);
+                exit(0);
+            }
+            help("install")
+        }
         "uninstall" => {}
         "update" => {}
         "upgrade" => {}
