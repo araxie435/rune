@@ -1,2 +1,2 @@
-pub mod uninstaller;
 pub mod uninstall;
+pub mod uninstaller;

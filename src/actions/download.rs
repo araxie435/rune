@@ -5,5 +5,5 @@ pub fn download_packages(packages: Vec<String>, versions: HashMap<String, String
 
     println!("Now online installing isn't supported!");
 
-    return paths
+    return paths;
 }

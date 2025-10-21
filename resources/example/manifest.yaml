@@ -1,7 +1,14 @@
-name: example-package
-version: v0.0.0
+name: example
+version: v0.0.1
 description: An example package for testing
-levels: 
-  global
-  group
-  user
+scopes:
+  - global
+  - group
+  - user
+paths:
+  global:
+    bin: /bin/example
+  group:
+    bin: /usr/local/groups/{}/bin/example
+  user:
+    bin: /home/{}/.local/bin/example

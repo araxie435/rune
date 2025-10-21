@@ -1,2 +1,2 @@
-pub mod upgrader;
 pub mod upgrade;
+pub mod upgrader;
