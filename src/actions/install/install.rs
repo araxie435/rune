@@ -81,21 +81,12 @@ pub fn install_handler(input: &[String], mut config: Config) {
         i += 1;
     }
 
-    if config.scope == "global" || config.scope == "group" {
-        if !is_root() {
-            println!("Error. Installing packages globally or for group requires root privileges.");
-            exit(1);
-        }
+    if !config.is_root {
+        println!("Error. Installing packages requires root privileges");
+        exit(1);
     }
 
     install(paths, packages, &config);
-}
-
-fn is_root() -> bool {
-    if std::env::var("USER").unwrap_or_default() == "root" {
-        return true;
-    }
-    return false;
 }
 
 fn install(mut paths: Vec<String>, packages: Vec<String>, config: &Config) {

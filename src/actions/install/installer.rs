@@ -8,7 +8,7 @@ use std::{
 
 use crate::{
     actions::{archive::unarchive_to_path, temp_paths::generate_temp_path},
-    configs::config::{Config, Manifest, parse_manifest},
+    configs::config::{add_package_to_dump, collect_manifest, Config, InstallPaths, Manifest},
 };
 
 pub fn install_package(path: &str, config: &Config) {
@@ -16,7 +16,7 @@ pub fn install_package(path: &str, config: &Config) {
 
     unarchive_to_path(&PathBuf::from(path), &temp_path);
 
-    let manifest: Manifest = parse_manifest(&temp_path.join("manifest.yaml"));
+    let manifest: Manifest = collect_manifest(&temp_path.join("manifest.yaml"));
 
     if !manifest.scopes.iter().any(|s| s == &config.scope) {
         println!(
@@ -36,25 +36,9 @@ pub fn install_package(path: &str, config: &Config) {
 
     // Timely version
     copy_standard_binaries(&temp_path, &config);
+    add_package_to_dump(manifest, config);
 
     std::fs::remove_dir_all(&temp_path).unwrap();
-
-    println!("Installed {} - {}", manifest.name, manifest.version);
-}
-
-struct InstallPaths;
-impl InstallPaths {
-    fn global() -> PathBuf {
-        PathBuf::from("/bin")
-    }
-
-    fn group(group: &str) -> PathBuf {
-        PathBuf::from(format!("/usr/local/groups/{group}/bin"))
-    }
-
-    fn user(user: &str) -> PathBuf {
-        PathBuf::from(format!("/home/{user}/.local/bin"))
-    }
 }
 
 fn copy_standard_binaries(temp_path: &PathBuf, config: &Config) {

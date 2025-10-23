@@ -1,4 +1,5 @@
 use crate::actions::install::install::install_handler;
+use crate::actions::uninstall::uninstall::uninstall_handler;
 use crate::commands::help::help;
 use crate::configs::config::Config;
 use std::process::exit;
@@ -29,7 +30,13 @@ pub fn handle(config: Config) {
             help("install")
         }
 
-        "uninstall" => {}
+        "uninstall" => {
+            if input.len() >= 3 {
+                uninstall_handler(&input[2..], config);
+                exit(0);
+            }
+            help("uninstall");
+        }
 
         "update" => {}
 
