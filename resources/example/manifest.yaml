@@ -7,8 +7,11 @@ scopes:
   - user
 paths:
   global:
-    bin: /bin/example
+    bin:
+    - /bin/example
   group:
-    bin: /usr/local/groups/{}/bin/example
+    bin:
+    - /usr/local/groups/{}/bin/example
   user:
-    bin: /home/{}/.local/bin/example
+    bin:
+    - /home/{}/.local/bin/example

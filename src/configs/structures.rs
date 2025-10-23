@@ -70,6 +70,7 @@ impl DumpPaths {
 
 #[derive(Deserialize, Serialize)]
 pub struct PackagesDump {
+    #[serde(flatten)]
     pub packages: HashMap<String, PackageDump>
 }
 
