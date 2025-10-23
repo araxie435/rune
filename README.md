@@ -34,8 +34,8 @@ Roadmap:
 - [x] Help command
 - [x] Example package
 - [x] Global installation (offline)
-- [ ] Group & User installation (offline)
-- [ ] Uninstallation
+- [x] Group & User installation (offline)
+- [x] Uninstallation
 - [ ] Package update feature
 - [ ] Mirrors
 - [ ] Online
