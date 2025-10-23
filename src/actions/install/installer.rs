@@ -8,7 +8,7 @@ use std::{
 
 use crate::{
     actions::{archive::unarchive_to_path, temp_paths::generate_temp_path},
-    configs::config::{add_package_to_dump, collect_manifest, Config, InstallPaths, Manifest},
+    configs::{config::{add_package_to_dump, collect_manifest}, structures::{Config, InstallPaths, Manifest}},
 };
 
 pub fn install_package(path: &str, config: &Config) {

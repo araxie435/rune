@@ -1,6 +1,6 @@
-use std::{path::PathBuf, process::exit};
+use std::process::exit;
 
-use crate::{actions::uninstall::uninstaller::uninstall_package, configs::config::{collect_packages_dump, Config, DumpPaths, PackagesDump}};
+use crate::{actions::uninstall::uninstaller::uninstall_package, configs::{config::collect_packages_dump, structures::{Config, DumpPaths, PackagesDump}}};
 
 pub fn uninstall_handler(input: &[String], mut config: Config) {
     let mut packages: Vec<String> = Vec::new();

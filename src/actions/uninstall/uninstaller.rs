@@ -1,6 +1,6 @@
 use std::path::PathBuf;
 
-use crate::configs::config::{remove_package_from_dump, Config, PackageDump};
+use crate::configs::{config::remove_package_from_dump, structures::{Config, PackageDump}};
 
 pub fn uninstall_package(config: &Config, dump: &PackageDump, package: &str) {
     println!("Uninstalling package {} - {}", package, dump.version);

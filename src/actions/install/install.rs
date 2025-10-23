@@ -1,6 +1,6 @@
 use crate::actions::download::download_packages;
 use crate::actions::install::installer::install_package;
-use crate::configs::config::Config;
+use crate::configs::structures::Config;
 use crate::configs::data::get_versions;
 use std::collections::HashMap;
 use std::io::Write;

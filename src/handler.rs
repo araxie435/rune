@@ -1,7 +1,7 @@
 use crate::actions::install::install::install_handler;
 use crate::actions::uninstall::uninstall::uninstall_handler;
 use crate::commands::help::help;
-use crate::configs::config::Config;
+use crate::configs::structures::Config;
 use std::process::exit;
 
 pub fn handle(config: Config) {
