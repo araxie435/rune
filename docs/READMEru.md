@@ -20,8 +20,11 @@
 
 ## Установка
 
-***В будущем***
-
+Используя bash скрипт:
+``` bash
+curl -fsSL "https://raw.githubusercontent.com/araxie435/rune/refs/heads/main/resources/scripts/runeinstall.sh" | sudo bash
+```
+[Здесь](https://github.com/araxie435/rune/blob/main/resources/scripts/runeinstall.sh) находится исходный код установщика
 ## В будущем
 
 ## Документация

@@ -50,15 +50,19 @@ else
     echo "$PROFILE_CODE" >> /etc/profile
 fi
 
-# Here will be installation of rune binary and config generation
-REPOSITORY="https://github.com/araxie/rune/releases/latest/download/"
-FILE="rune-linux-amd64-bin"
-TEMP_DIR=$(mktemp -d)
+REPOSITORY="https://github.com/araxie435/rune/releases/latest/download/"
+FILE="rune-amd64"
 
-echo "Downloading Rune binary..."
-curl -L "${REPOSITORY}${FILE}" -o "${TEMP_DIR}/rune"
-chmod 555 "${TEMP_DIR}/rune"
-mv "${TEMP_DIR}/rune" /bin/rune
+if [[ ! -f "/bin/rune" ]]; then
+    echo "Downloading Rune binary..."
+    TEMP_DIR=$(mktemp -d)
+    curl -L "${REPOSITORY}${FILE}" -o "${TEMP_DIR}/rune"
+    chmod 555 "${TEMP_DIR}/rune"
+    cp "${TEMP_DIR}/rune" /bin/rune
+    rm -rf "${TEMP_DIR}"
+else
+    echo "Rune binary already exists in /bin/rune, skipping download..."
+fi
 
 echo "Rune installation completed."
 exit 0
