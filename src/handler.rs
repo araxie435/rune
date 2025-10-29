@@ -8,6 +8,7 @@ pub fn handle(config: Config) {
     let input: Vec<String> = std::env::args().collect();
 
     if input.len() < 2 {
+        println!("Not enough arguments!");
         help("--everything");
         exit(0);
     }
@@ -19,7 +20,6 @@ pub fn handle(config: Config) {
                 exit(0);
             }
             help("--everything");
-            exit(0);
         }
 
         "install" => {
@@ -38,14 +38,25 @@ pub fn handle(config: Config) {
             help("uninstall");
         }
 
-        "update" => {}
+        "update" => {
+            println!("update feature will be added later");
+        }
 
-        "upgrade" => {}
+        "upgrade" => {
+            println!("upgrade feature will be added later");
+        }
 
-        "tree" => {}
+        "tree" => {
+            println!("tree feature will be added later");
+        }
 
-        "info" => {}
+        "info" => {
+            println!("info feature will be added later");
+        }
         
-        _ => {}
+        input => {
+            println!("Unknown command: {input}");
+            help("--everything");
+        }
     }
 }

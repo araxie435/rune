@@ -93,7 +93,7 @@ fn copy_binaries(
     temp_path: &PathBuf
 ) -> Vec<PathBuf> {
     let (file_mode, uid, gid): (u32, Option<u32>, Option<u32>) = match config.scope.as_str() {
-        "global" => (0o000, Some(0), Some(0)),
+        "global" => (0o550, Some(0), Some(0)),
 
         "group" => {
             let gid: u32 = get_group_gid(&config.group).unwrap_or_else(|err| {
@@ -102,7 +102,7 @@ fn copy_binaries(
                 exit(1);
             });
 
-            (0o000, Some(0), Some(gid))
+            (0o550, Some(0), Some(gid))
         }
 
         "user" => {
@@ -118,7 +118,7 @@ fn copy_binaries(
                 exit(1);
             });
 
-            (0o000, Some(uid), Some(gid))
+            (0o550, Some(uid), Some(gid))
         }
 
         _ => {
@@ -126,7 +126,7 @@ fn copy_binaries(
             panic_cleanup(&temp_path, &created_paths);
             exit(1);
         }
-    }; // TODO Change modes
+    };
 
     for entry_result in fs::read_dir(&source).unwrap_or_else(|err: Error| {
         eprintln!("Cannot read source dir: {err}");
@@ -187,7 +187,7 @@ fn copy_configs_recursive(
     temp_path: &PathBuf
 ) -> Vec<PathBuf> {
     let (file_mode, dir_mode, uid, gid): (u32, u32, Option<u32>, Option<u32>) = match config.scope.as_str() {
-        "global" => (0o000, 0o000, Some(0), Some(0)),
+        "global" => (0o660, 0o660, Some(0), Some(0)),
 
         "group" => {
             let gid: u32 = get_group_gid(&config.group).unwrap_or_else(|err| {
@@ -196,7 +196,7 @@ fn copy_configs_recursive(
                 exit(1);
             });
 
-            (0o000, 0o000, Some(0), Some(gid))
+            (0o660, 0o660, Some(0), Some(gid))
         }
 
         "user" => {
@@ -212,7 +212,7 @@ fn copy_configs_recursive(
                 exit(1);
             });
 
-            (0o000, 0o000, Some(uid), Some(gid))
+            (0o660, 0o660, Some(uid), Some(gid))
         }
 
         _ => {
@@ -220,7 +220,7 @@ fn copy_configs_recursive(
             panic_cleanup(&temp_path, &created_paths);
             exit(1);
         }
-    }; // TODO Change modes
+    };
 
     for entry_result in fs::read_dir(source).unwrap_or_else(|err: Error| {
         eprintln!("Cannot read dir: {err}");
