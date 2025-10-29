@@ -25,12 +25,25 @@ impl InstallPaths {
     }
 }
 
+pub struct ConfigPaths;
+impl ConfigPaths {
+    pub fn global() -> PathBuf {
+        PathBuf::from("/etc")
+    }
+
+    pub fn group(group: &str) -> PathBuf {
+        PathBuf::from(format!("/usr/local/groups/{group}/etc"))
+    }
+
+    pub fn user(user: &str) -> PathBuf {
+        PathBuf::from(format!("/home/{user}/.local/etc"))
+    }
+}
 
 #[derive(Deserialize)]
 pub struct Manifest {
     pub name: String,
     pub version: String,
-    pub description: String,
     pub scopes: Vec<String>,
     pub paths: PathScopes,
 }

@@ -1,0 +1,29 @@
+# Plan
+This is a personal step by step plan, so it can be changed many times
+
+- Configs /// NOW ///
+- Scripts (INCLUDE UNINSTALL)
+- Release 0.0.2
+- Update
+- Release 0.0.3
+- Multi package install panic !!! IMPORTANT !!!
+- Release 0.0.4
+
+Pause - - - - - -
+
+- Mirrors
+- Download
+- Dependencies
+- Atomic install !!! IMPORTANT !!!
+- Release 0.1.0
+
+Pause - - - - - -
+
+- Basic program configs
+- Other commands
+- Site?
+
+
+Potential problems:
+- defend tempdir. chown&chmod
+- Corrupted install (after dependencies)
