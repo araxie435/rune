@@ -22,9 +22,9 @@ The package manager
 
 Using bash script:
 ``` bash
-curl -fsSL "https://raw.githubusercontent.com/araxie435/rune/refs/heads/main/resources/scripts/runeinstall.sh" | sudo bash
+curl -fsSL "https://raw.githubusercontent.com/RuneLinux/rune/refs/heads/main/resources/scripts/runeinstall.sh" | sudo bash
 ```
-[There](https://github.com/araxie435/rune/blob/main/resources/scripts/runeinstall.sh) is installers source code
+[There](https://github.com/RuneLinux/rune/blob/main/resources/scripts/runeinstall.sh) is installers source code
 
 ## Docs
 
