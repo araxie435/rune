@@ -59,9 +59,9 @@ pub struct PathScopes {
 
 #[derive(Deserialize, Serialize)]
 pub struct PathByUsage {
-    pub bin: Vec<String>,
-    pub config: Option<String>,
-    pub other: Option<String>,
+    pub bin: Option<Vec<String>>,
+    pub config: Option<Vec<String>>,
+    pub other: Option<Vec<String>>,
 }
 
 
@@ -83,7 +83,6 @@ impl DumpPaths {
 
 #[derive(Deserialize, Serialize)]
 pub struct PackagesDump {
-    #[serde(flatten)]
     pub packages: HashMap<String, PackageDump>
 }
 

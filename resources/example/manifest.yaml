@@ -9,9 +9,15 @@ paths:
   global:
     bin:
     - /bin/example
+    config:
+    - /etc/example-config.toml
   group:
     bin:
     - /usr/local/groups/{}/bin/example
+    config:
+    - /usr/local/groups/{}/.local/etc/example-config.toml
   user:
     bin:
     - /home/{}/.local/bin/example
+    config:
+    - /home/{}/.local/etc/example-config.toml

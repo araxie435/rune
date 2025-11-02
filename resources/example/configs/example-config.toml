@@ -1,0 +1,11 @@
+# This is example's example of config
+
+[general]
+
+example_bool = true
+
+example_string = "Yep, It's string. And it works"
+
+example_int = 435435
+
+example_bin = 0b010010000100100100100001

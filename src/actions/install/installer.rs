@@ -15,7 +15,7 @@ pub fn install_package(path: &str, config: &Config) {
 
     let manifest: Manifest = collect_manifest(&temp_path.join("manifest.yaml"));
 
-    if !manifest.scopes.iter().any(|s| s == &config.scope) {
+    if !manifest.scopes.iter().any(|scope: &String| scope == &config.scope) {
         println!("Error. Package {} cannot be installed for scope {}", manifest.name, config.scope);
 
         println!("Available scopes for this package: {}", manifest.scopes.join(", "));
@@ -59,7 +59,7 @@ fn copy_standard_files(temp_path: &PathBuf, config: &Config) {
         created_paths = copy_binaries(&source_bin, &dest_bin, &config, created_paths, &temp_path);
     }
 
-    let source_config: PathBuf = temp_path.join("etc");
+    let source_config: PathBuf = temp_path.join("configs");
 
     let dest_config: PathBuf = match config.scope.as_str() {
         "global" => ConfigPaths::global(),
@@ -93,10 +93,10 @@ fn copy_binaries(
     temp_path: &PathBuf
 ) -> Vec<PathBuf> {
     let (file_mode, uid, gid): (u32, Option<u32>, Option<u32>) = match config.scope.as_str() {
-        "global" => (0o550, Some(0), Some(0)),
+        "global" => (0o555, Some(0), Some(0)),
 
         "group" => {
-            let gid: u32 = get_group_gid(&config.group).unwrap_or_else(|err| {
+            let gid: u32 = get_group_gid(&config.group).unwrap_or_else(|err: String| {
                 eprintln!("Invalid config: {err}");
                 panic_cleanup(&temp_path, &created_paths);
                 exit(1);
@@ -106,13 +106,13 @@ fn copy_binaries(
         }
 
         "user" => {
-            let uid: u32 = get_user_uid(&config.user).unwrap_or_else(|err| {
+            let uid: u32 = get_user_uid(&config.user).unwrap_or_else(|err: String| {
                 eprintln!("Invalid config: {err}");
                 panic_cleanup(&temp_path, &created_paths);
                 exit(1);
             });
 
-            let gid: u32 = get_user_gid(&config.user).unwrap_or_else(|err| {
+            let gid: u32 = get_user_gid(&config.user).unwrap_or_else(|err: String| {
                 eprintln!("Invalid config: {err}");
                 panic_cleanup(&temp_path, &created_paths);
                 exit(1);
@@ -187,32 +187,32 @@ fn copy_configs_recursive(
     temp_path: &PathBuf
 ) -> Vec<PathBuf> {
     let (file_mode, dir_mode, uid, gid): (u32, u32, Option<u32>, Option<u32>) = match config.scope.as_str() {
-        "global" => (0o660, 0o660, Some(0), Some(0)),
+        "global" => (0o666, 0o777, Some(0), Some(0)),
 
         "group" => {
-            let gid: u32 = get_group_gid(&config.group).unwrap_or_else(|err| {
+            let gid: u32 = get_group_gid(&config.group).unwrap_or_else(|err: String| {
                 eprintln!("Invalid config: {err}");
                 panic_cleanup(&temp_path, &created_paths);
                 exit(1);
             });
 
-            (0o660, 0o660, Some(0), Some(gid))
+            (0o660, 0o770, Some(0), Some(gid))
         }
 
         "user" => {
-            let uid: u32 = get_user_uid(&config.user).unwrap_or_else(|err| {
+            let uid: u32 = get_user_uid(&config.user).unwrap_or_else(|err: String| {
                 eprintln!("Invalid config: {err}");
                 panic_cleanup(&temp_path, &created_paths);
                 exit(1);
             });
 
-            let gid: u32 = get_user_gid(&config.user).unwrap_or_else(|err| {
+            let gid: u32 = get_user_gid(&config.user).unwrap_or_else(|err: String| {
                 eprintln!("Invalid config: {err}");
                 panic_cleanup(&temp_path, &created_paths);
                 exit(1);
             });
 
-            (0o660, 0o660, Some(uid), Some(gid))
+            (0o660, 0o770, Some(uid), Some(gid))
         }
 
         _ => {
@@ -240,8 +240,9 @@ fn copy_configs_recursive(
         if source_path.is_dir() {
             if !dest_path.exists() {
                 fs::create_dir_all(&dest_path).unwrap_or_else(|err: Error| {
-                    eprintln!("Failed to create dir {}", &dest_path.display())
+                    eprintln!("Failed to create dir {}: {}", &dest_path.display(), err)
                 });
+
                 created_paths.push(dest_path.clone());
             }
 
@@ -259,7 +260,7 @@ fn copy_configs_recursive(
                 exit(1);
             });
 
-            created_paths = copy_configs_recursive(&source, &dest, &config, created_paths, &temp_path);
+            created_paths = copy_configs_recursive(&source_path, &dest_path, &config, created_paths, &temp_path);
         } else {
             fs::copy(&source_path, &dest_path).unwrap_or_else(|err: Error| {
                 eprintln!(
