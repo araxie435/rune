@@ -25,12 +25,25 @@ impl InstallPaths {
     }
 }
 
+pub struct ConfigPaths;
+impl ConfigPaths {
+    pub fn global() -> PathBuf {
+        PathBuf::from("/etc")
+    }
+
+    pub fn group(group: &str) -> PathBuf {
+        PathBuf::from(format!("/usr/local/groups/{group}/etc"))
+    }
+
+    pub fn user(user: &str) -> PathBuf {
+        PathBuf::from(format!("/home/{user}/.local/etc"))
+    }
+}
 
 #[derive(Deserialize)]
 pub struct Manifest {
     pub name: String,
     pub version: String,
-    pub description: String,
     pub scopes: Vec<String>,
     pub paths: PathScopes,
 }
@@ -46,9 +59,9 @@ pub struct PathScopes {
 
 #[derive(Deserialize, Serialize)]
 pub struct PathByUsage {
-    pub bin: Vec<String>,
-    pub config: Option<String>,
-    pub other: Option<String>,
+    pub bin: Option<Vec<String>>,
+    pub config: Option<Vec<String>>,
+    pub other: Option<Vec<String>>,
 }
 
 
@@ -70,7 +83,6 @@ impl DumpPaths {
 
 #[derive(Deserialize, Serialize)]
 pub struct PackagesDump {
-    #[serde(flatten)]
     pub packages: HashMap<String, PackageDump>
 }
 

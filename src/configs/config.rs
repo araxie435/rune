@@ -40,10 +40,16 @@ pub fn collect_manifest(path_to_manifest: &PathBuf) -> Manifest {
 
 pub fn collect_packages_dump(path_to_dump: &PathBuf) -> PackagesDump {
     let dump_content: String =
-        std::fs::read_to_string(path_to_dump).expect("Failed to read packages dump file");
+        std::fs::read_to_string(path_to_dump).unwrap_or_else(|err: std::io::Error| {
+            eprintln!("Failed to read packages dump file: {}", err);
+            exit(1);
+        });
 
     let dump: PackagesDump =
-        serde_json::from_str(&dump_content).expect("Failed to parse packages dump file");
+        serde_json::from_str(&dump_content).unwrap_or_else(|err: serde_json::Error| {
+            eprintln!("Failed to parse packages dump file: {}", err);
+            exit(1);
+        });
         
     return dump;
 }

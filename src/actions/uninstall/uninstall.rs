@@ -1,4 +1,5 @@
 use std::process::exit;
+use std::io::Write;
 
 use crate::{actions::uninstall::uninstaller::uninstall_package, configs::{config::collect_packages_dump, structures::{Config, DumpPaths, PackagesDump}}};
 
@@ -73,7 +74,7 @@ pub fn uninstall_handler(input: &[String], mut config: Config) {
     uninstall(packages, &config);
 }
 
-fn uninstall(packages:Vec<String>, config: &Config) {
+fn uninstall(mut packages:Vec<String>, config: &Config) {
     let mut dump: PackagesDump;
 
     match config.scope.as_str() {
@@ -96,12 +97,48 @@ fn uninstall(packages:Vec<String>, config: &Config) {
         
     }
 
-    for package in packages {
-        if !dump.packages.contains_key(&package) {
+    let mut filtered: Vec<String> = Vec::new();
+    for package in &packages {
+        if dump.packages.contains_key(package) {
+            filtered.push(package.clone());
+        } else {
             println!("Package {} isn't installed in {} scope.", package, config.scope);
-            exit(1);
         }
+    }
 
-        uninstall_package(config, &dump.packages[&package], &package);
+    if filtered.is_empty() {
+        println!("No packages to uninstall.");
+        exit(0);
+    }
+
+    packages = filtered;
+
+    ask_uninstall(&packages);
+
+    for package in packages {
+        if dump.packages.contains_key(&package) {
+            uninstall_package(config, &dump.packages[&package], &package);
+        } else {
+            println!("Package {} isn't installed in {} scope. !Please report if you see this!", package, config.scope); // This should not happen
+        }
+    }
+}
+
+fn ask_uninstall(packages: &Vec<String>) {
+    println!("The following packages will be uninstalled:");
+
+    for package in packages {
+        println!("- {}", package);
+    }
+    print!("Agree? [y/N]: ");
+    std::io::stdout().flush().unwrap();
+
+    let mut input: String = String::new();
+    std::io::stdin().read_line(&mut input).unwrap();
+    let input: &str = input.trim();
+
+    if input.to_lowercase() != "y" {
+        println!("Aborting uninstall.");
+        exit(0);
     }
 }
